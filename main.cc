@@ -42,7 +42,7 @@ void getTokens(std::vector<std::string> &tokens) {
         tokens.push_back(s);
     }
 
-    if (tokens.size() < 6) {
+    if (tokens.size() < 7) {
         std::cerr << "Error: Not enough parameters in config file" << std::endl;
         exit(1);
     }
@@ -182,11 +182,11 @@ int main(int argc, char** argv) {
     size_t skeyMax = std::stoi(tokens[3]);
     size_t svalMin = std::stoi(tokens[4]);
     size_t svalMax = std::stoi(tokens[5]);
-    size_t testSize = std::stoi(tokens[6]);
+    size_t testSize = std::stoi(tokens[7]);
     std::string type = tokens[1];
 
     std::vector<std::string> values[testSize];
-    if (type == "string") {
+    if (type == "string" || type == "combined") {
         getValues(values, testSize);
     }
 
@@ -202,20 +202,20 @@ int main(int argc, char** argv) {
         std::string index_str = std::to_string(i);
 
         // Register serialization benchmarks
-        benchmark::RegisterBenchmark(("BM_JsonSerialization_" + index_str).c_str(), BM_JsonSerialization, testDataVector[i], std::ref(serializedData[i][0]), std::ref(sizes[i][0]));
+        // benchmark::RegisterBenchmark(("BM_JsonSerialization_" + index_str).c_str(), BM_JsonSerialization, testDataVector[i], std::ref(serializedData[i][0]), std::ref(sizes[i][0]));
         benchmark::RegisterBenchmark(("BM_FlatBufSerialization_" + index_str).c_str(), BM_FlatBufSerialization, testDataVector[i], std::ref(serializedData[i][1]), std::ref(sizes[i][1]));
         benchmark::RegisterBenchmark(("BM_MsgPackSerialization_" + index_str).c_str(), BM_MsgPackSerialization, testDataVector[i], std::ref(serializedData[i][2]), std::ref(sizes[i][2]));
-        benchmark::RegisterBenchmark(("BM_FlexBufSerialization_" + index_str).c_str(), BM_FlexBufSerialization, testDataVector[i], std::ref(serializedData[i][3]), std::ref(sizes[i][3]));
-        benchmark::RegisterBenchmark(("BM_ProtoBufSerialization_" + index_str).c_str(), BM_ProtoBufSerialization, testDataVector[i], std::ref(serializedData[i][4]), std::ref(sizes[i][4]));
-        benchmark::RegisterBenchmark(("BM_ThriftSerialization_" + index_str).c_str(), BM_ThriftSerialization, testDataVector[i], std::ref(serializedData[i][5]), std::ref(sizes[i][5]));
+        // benchmark::RegisterBenchmark(("BM_FlexBufSerialization_" + index_str).c_str(), BM_FlexBufSerialization, testDataVector[i], std::ref(serializedData[i][3]), std::ref(sizes[i][3]));
+        // benchmark::RegisterBenchmark(("BM_ProtoBufSerialization_" + index_str).c_str(), BM_ProtoBufSerialization, testDataVector[i], std::ref(serializedData[i][4]), std::ref(sizes[i][4]));
+        // benchmark::RegisterBenchmark(("BM_ThriftSerialization_" + index_str).c_str(), BM_ThriftSerialization, testDataVector[i], std::ref(serializedData[i][5]), std::ref(sizes[i][5]));
 
         // Register deserialization benchmarks
-        benchmark::RegisterBenchmark(("BM_JsonDeserialization_" + index_str).c_str(), BM_JsonDeserialization, std::ref(serializedData[i][0]), std::ref(sizes[i][0]));
+        // benchmark::RegisterBenchmark(("BM_JsonDeserialization_" + index_str).c_str(), BM_JsonDeserialization, std::ref(serializedData[i][0]), std::ref(sizes[i][0]));
         benchmark::RegisterBenchmark(("BM_FlatBufDeserialization_" + index_str).c_str(), BM_FlatBufDeserialization, std::ref(serializedData[i][1]), std::ref(sizes[i][1]));
         benchmark::RegisterBenchmark(("BM_MsgPackDeserialization_" + index_str).c_str(), BM_MsgPackDeserialization, std::ref(serializedData[i][2]), std::ref(sizes[i][2]));
-        benchmark::RegisterBenchmark(("BM_FlexBufDeserialization_" + index_str).c_str(), BM_FlexBufDeserialization, std::ref(serializedData[i][3]), std::ref(sizes[i][3]));
-        benchmark::RegisterBenchmark(("BM_ProtoBufDeserialization_" + index_str).c_str(), BM_ProtoBufDeserialization, std::ref(serializedData[i][4]), std::ref(sizes[i][4]));
-        benchmark::RegisterBenchmark(("BM_ThriftDeserialization_" + index_str).c_str(), BM_ThriftDeserialization, std::ref(serializedData[i][5]), std::ref(sizes[i][5]));
+        // benchmark::RegisterBenchmark(("BM_FlexBufDeserialization_" + index_str).c_str(), BM_FlexBufDeserialization, std::ref(serializedData[i][3]), std::ref(sizes[i][3]));
+        // benchmark::RegisterBenchmark(("BM_ProtoBufDeserialization_" + index_str).c_str(), BM_ProtoBufDeserialization, std::ref(serializedData[i][4]), std::ref(sizes[i][4]));
+        // benchmark::RegisterBenchmark(("BM_ThriftDeserialization_" + index_str).c_str(), BM_ThriftDeserialization, std::ref(serializedData[i][5]), std::ref(sizes[i][5]));
     }
 
     std::string fileHeader = std::to_string(nkeys) + "-" + type + "-" + std::to_string(skeyMin) + "-" + std::to_string(skeyMax) + "-" + std::to_string(svalMin) + "-" + std::to_string(svalMax) + "-" + std::to_string(testSize);

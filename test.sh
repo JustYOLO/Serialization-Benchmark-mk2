@@ -1,10 +1,12 @@
 #!/bin/bash
 
+# TODO: add arrLen support in combined
+
 # Path to the configuration file
 CONFIG_FILE="config.txt"
 
 # Base configuration (number of keys, type of keys, size of keys (min, max), size of values (min, max), serialization function)
-BASE_CONFIG="8, string, 8, 8, 16, 16, 100"
+BASE_CONFIG="8, string, 8, 8, 16, 16, 100" # TODO: add arrLen parameter
 
 # Variations
 KEY_TYPES=("int32_t" "double")

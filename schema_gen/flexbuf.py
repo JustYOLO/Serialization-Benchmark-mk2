@@ -1,5 +1,5 @@
 class flexbuf_gen:
-    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, key_value_pair, testSize) -> None:
+    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, combined_types) -> None:
         self.nkey = nkey
         self.tkey = tkey
         self.skeyMin = skeyMin
@@ -8,6 +8,8 @@ class flexbuf_gen:
         self.svalMax = svalMax
         self.key_value_pair = key_value_pair
         self.testSize = testSize
+        self.arrLen = arrLen
+        self.COMBINED_TYPES = combined_types
 
     def gen_header(self) -> str:
         header_content = """#include <flatbuffers/flexbuffers.h>
@@ -41,7 +43,7 @@ namespace flex {
         void Deserialize(testData& data, std::vector<char> &serializedData, const size_t size) {
             auto root = flexbuffers::GetRoot(reinterpret_cast<const uint8_t*>(serializedData.data()), size).AsMap();
 
-    """
+"""
         # data.dngdRVLn = root["dngdRVLn"].AsString().str();
         if self.tkey == "string":
             for key in self.key_value_pair.keys():

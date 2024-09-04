@@ -5,14 +5,11 @@ namespace proto {
     size_t Serialize(const testData& data, std::vector<char> &serializedData) {
         GOOGLE_PROTOBUF_VERIFY_VERSION; // is it necessary?
         ProtoData protoData;
-        protoData.set_zvtecooq(data.zvtecooq);
-        protoData.set_yhavzzus(data.yhavzzus);
-        protoData.set_bdarcopv(data.bdarcopv);
-        protoData.set_zyxhbtad(data.zyxhbtad);
-        protoData.set_bifsqzpy(data.bifsqzpy);
-        protoData.set_wpeblhba(data.wpeblhba);
-        protoData.set_eqohxbbj(data.eqohxbbj);
-        protoData.set_rgmckfxb(data.rgmckfxb);
+            protoData.set_struct(data.struct);
+            protoData.set_mjogvdtj(data.mjogvdtj);
+            protoData.set_int(data.int);
+            protoData.set_float(data.float);
+            protoData.set_string(data.string);
         size_t size = protoData.ByteSizeLong();
             serializedData.resize(size);
             protoData.SerializeToArray(serializedData.data(), static_cast<int>(size));
@@ -26,13 +23,10 @@ namespace proto {
         void Deserialize(testData& data, std::vector<char> &serializedData, const size_t size) {
             ProtoData protoData;
             protoData.ParseFromArray(serializedData.data(), static_cast<int>(size));
-        data.zvtecooq = protoData.zvtecooq();
-        data.yhavzzus = protoData.yhavzzus();
-        data.bdarcopv = protoData.bdarcopv();
-        data.zyxhbtad = protoData.zyxhbtad();
-        data.bifsqzpy = protoData.bifsqzpy();
-        data.wpeblhba = protoData.wpeblhba();
-        data.eqohxbbj = protoData.eqohxbbj();
-        data.rgmckfxb = protoData.rgmckfxb();
+            data.struct = protoData.struct();
+            data.mjogvdtj = protoData.mjogvdtj();
+            data.int = protoData.int();
+            data.float = protoData.float();
+            data.string = protoData.string();
     }
-    }
+}

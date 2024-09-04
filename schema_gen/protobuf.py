@@ -1,5 +1,5 @@
 class protobuf_gen:
-    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, key_value_pair, testSize) -> None:
+    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, combined_types) -> None:
         self.nkey = nkey
         self.tkey = tkey
         self.skeyMin = skeyMin
@@ -8,6 +8,8 @@ class protobuf_gen:
         self.svalMax = svalMax
         self.key_value_pair = key_value_pair
         self.testSize = testSize
+        self.arrLen = arrLen
+        self.COMBINED_TYPES = combined_types
 
     def gen_schema(self) -> str:
         content = """syntax = "proto3";
@@ -37,7 +39,7 @@ namespace proto {
         ProtoData protoData;
 """
         for key in self.key_value_pair.keys():
-            content += f"        protoData.set_{key}(data.{key});\n"
+            content += f"            protoData.set_{key}(data.{key});\n"
 
         content += """        size_t size = protoData.ByteSizeLong();
             serializedData.resize(size);
@@ -54,8 +56,8 @@ namespace proto {
             protoData.ParseFromArray(serializedData.data(), static_cast<int>(size));
 """
         for key in self.key_value_pair.keys():
-            content += f"        data.{key} = protoData.{key}();\n"
+            content += f"            data.{key} = protoData.{key}();\n"
         content += """    }
-    }
+}
 """
         return content

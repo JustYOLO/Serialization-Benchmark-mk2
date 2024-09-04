@@ -2,13 +2,20 @@
 // this may only used by msgPack
 
 void DataGenerator::fillString(testData& data, const std::vector<std::string> &values) {
-    
-    data.zvtecooq = values[0];
-    data.yhavzzus = values[1];
-    data.bdarcopv = values[2];
-    data.zyxhbtad = values[3];
-    data.bifsqzpy = values[4];
-    data.wpeblhba = values[5];
-    data.eqohxbbj = values[6];
-    data.rgmckfxb = values[7];
+}
+void DataGenerator::fillCombined(testData& data, const std::vector<std::string> &values) {
+    data.lmontiqn = generateRandomValue<int>();
+    data.gttsakbp = generateRandomValue<int>();
+    data.sgruersi = generateRandomValue<float>();
+    data.cbjiwmfv = generateRandomValue<float>();
+    data.toiywwtb = values[0];
+    data.ojkinvvf = values[1];
+    for(int i = 0; i < 3; i++) {
+        data.mjogvdtj[i].etiizwwn = generateRandomValue<int>();
+        data.mjogvdtj[i].cbcfskih = generateRandomValue<int>();
+        data.mjogvdtj[i].ldeucjga = generateRandomValue<float>();
+        data.mjogvdtj[i].cgekyebx = generateRandomValue<float>();
+        data.mjogvdtj[i].xgrdxjrt = values[(i + 1) * 2 + 0];
+        data.mjogvdtj[i].calizksb = values[(i + 1) * 2 + 1];
+    }
 }

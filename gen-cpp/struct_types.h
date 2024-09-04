@@ -23,80 +23,19 @@
 
 class TStruct;
 
-typedef struct _TStruct__isset {
-  _TStruct__isset() : zvtecooq(false), yhavzzus(false), bdarcopv(false), zyxhbtad(false), bifsqzpy(false), wpeblhba(false), eqohxbbj(false), rgmckfxb(false) {}
-  bool zvtecooq :1;
-  bool yhavzzus :1;
-  bool bdarcopv :1;
-  bool zyxhbtad :1;
-  bool bifsqzpy :1;
-  bool wpeblhba :1;
-  bool eqohxbbj :1;
-  bool rgmckfxb :1;
-} _TStruct__isset;
 
 class TStruct : public virtual ::apache::thrift::TBase {
  public:
 
-  TStruct(const TStruct&);
-  TStruct& operator=(const TStruct&);
-  TStruct() noexcept
-          : zvtecooq(),
-            yhavzzus(),
-            bdarcopv(),
-            zyxhbtad(),
-            bifsqzpy(),
-            wpeblhba(),
-            eqohxbbj(),
-            rgmckfxb() {
+  TStruct(const TStruct&) noexcept;
+  TStruct& operator=(const TStruct&) noexcept;
+  TStruct() noexcept {
   }
 
   virtual ~TStruct() noexcept;
-  std::string zvtecooq;
-  std::string yhavzzus;
-  std::string bdarcopv;
-  std::string zyxhbtad;
-  std::string bifsqzpy;
-  std::string wpeblhba;
-  std::string eqohxbbj;
-  std::string rgmckfxb;
 
-  _TStruct__isset __isset;
-
-  void __set_zvtecooq(const std::string& val);
-
-  void __set_yhavzzus(const std::string& val);
-
-  void __set_bdarcopv(const std::string& val);
-
-  void __set_zyxhbtad(const std::string& val);
-
-  void __set_bifsqzpy(const std::string& val);
-
-  void __set_wpeblhba(const std::string& val);
-
-  void __set_eqohxbbj(const std::string& val);
-
-  void __set_rgmckfxb(const std::string& val);
-
-  bool operator == (const TStruct & rhs) const
+  bool operator == (const TStruct & /* rhs */) const
   {
-    if (!(zvtecooq == rhs.zvtecooq))
-      return false;
-    if (!(yhavzzus == rhs.yhavzzus))
-      return false;
-    if (!(bdarcopv == rhs.bdarcopv))
-      return false;
-    if (!(zyxhbtad == rhs.zyxhbtad))
-      return false;
-    if (!(bifsqzpy == rhs.bifsqzpy))
-      return false;
-    if (!(wpeblhba == rhs.wpeblhba))
-      return false;
-    if (!(eqohxbbj == rhs.eqohxbbj))
-      return false;
-    if (!(rgmckfxb == rhs.rgmckfxb))
-      return false;
     return true;
   }
   bool operator != (const TStruct &rhs) const {

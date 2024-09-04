@@ -11,14 +11,11 @@ using namespace apache::thrift::transport;
 namespace thrift {
     size_t Serialize(const testData& data, std::vector<char> &serializedData) {
         TStruct tStruct;
-        tStruct.zvtecooq = data.zvtecooq;
-        tStruct.yhavzzus = data.yhavzzus;
-        tStruct.bdarcopv = data.bdarcopv;
-        tStruct.zyxhbtad = data.zyxhbtad;
-        tStruct.bifsqzpy = data.bifsqzpy;
-        tStruct.wpeblhba = data.wpeblhba;
-        tStruct.eqohxbbj = data.eqohxbbj;
-        tStruct.rgmckfxb = data.rgmckfxb;
+        tStruct.struct = data.struct;
+        tStruct.mjogvdtj = data.mjogvdtj;
+        tStruct.int = data.int;
+        tStruct.float = data.float;
+        tStruct.string = data.string;
 
 
         std::shared_ptr<TMemoryBuffer> buffer(new TMemoryBuffer());
@@ -43,14 +40,11 @@ namespace thrift {
 
         TStruct tStruct;
         tStruct.read(protocolIn.get());
-            data.zvtecooq = tStruct.zvtecooq;
-        data.yhavzzus = tStruct.yhavzzus;
-        data.bdarcopv = tStruct.bdarcopv;
-        data.zyxhbtad = tStruct.zyxhbtad;
-        data.bifsqzpy = tStruct.bifsqzpy;
-        data.wpeblhba = tStruct.wpeblhba;
-        data.eqohxbbj = tStruct.eqohxbbj;
-        data.rgmckfxb = tStruct.rgmckfxb;
+        data.struct = tStruct.struct;
+        data.mjogvdtj = tStruct.mjogvdtj;
+        data.int = tStruct.int;
+        data.float = tStruct.float;
+        data.string = tStruct.string;
     }
     }
     

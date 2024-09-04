@@ -14,6 +14,8 @@ void DataGenerator::fillStruct(testData& data, const std::string& type, const st
         fillDouble(data);
     } else if (type == "string") {
         fillString(data, values);
+    } else if(type == "combined") {
+        fillCombined(data, values);
     } else {
         throw std::runtime_error("Unsupported type");
     }
@@ -35,12 +37,22 @@ void DataGenerator::fillDouble(testData& data) {
     }
 }
 
-template<>
-int32_t DataGenerator::generateRandomValue<int32_t>() {
-    return std::uniform_int_distribution<int32_t>{}(gen);
-}
+// template<>
+// int32_t DataGenerator::generateRandomValue<int32_t>() {
+//     return std::uniform_int_distribution<int32_t>{}(gen);
+// }
+
+template<> 
+int DataGenerator::generateRandomValue<int>() {
+    return std::uniform_int_distribution<int>{}(gen);
+} // TODO: int vs int32_t ?
 
 template<>
 double DataGenerator::generateRandomValue<double>() {
     return std::uniform_real_distribution<double>{}(gen);
+}
+
+template<>
+float DataGenerator::generateRandomValue<float>() {
+    return std::uniform_real_distribution<float>{}(gen);
 }

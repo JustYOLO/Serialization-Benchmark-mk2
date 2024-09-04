@@ -1,5 +1,5 @@
 class thrift_gen:
-    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, key_value_pair, testSize) -> None:
+    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, combined_types) -> None:
         self.nkey = nkey
         self.tkey = tkey
         self.skeyMin = skeyMin
@@ -8,6 +8,8 @@ class thrift_gen:
         self.svalMax = svalMax
         self.key_value_pair = key_value_pair
         self.testSize = testSize
+        self.arrLen = arrLen
+        self.COMBINED_TYPES = combined_types
 
     def gen_schema(self) -> str:
         thrift_content = """struct TStruct {
@@ -66,7 +68,7 @@ namespace thrift {
 
         TStruct tStruct;
         tStruct.read(protocolIn.get());
-    """
+"""
         for key in self.key_value_pair.keys():
             struct_content += f"        data.{key} = tStruct.{key};\n"
         struct_content += """    }

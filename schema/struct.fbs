@@ -1,11 +1,19 @@
+table fNested {
+    etiizwwn: int32;
+    cbcfskih: int32;
+    ldeucjga: float;
+    cgekyebx: float;
+    xgrdxjrt: string;
+    calizksb: string;
+}
+
 table flatData {
-    zvtecooq: string;
-    yhavzzus: string;
-    bdarcopv: string;
-    zyxhbtad: string;
-    bifsqzpy: string;
-    wpeblhba: string;
-    eqohxbbj: string;
-    rgmckfxb: string;
+    lmontiqn: int32;
+    gttsakbp: int32;
+    sgruersi: float;
+    cbjiwmfv: float;
+    toiywwtb: string;
+    ojkinvvf: string;
+    mjogvdtj: [fNested];
 }
 root_type flatData;

@@ -4,7 +4,7 @@
         2. tkey type checking
 '''
 
-# import random
+import random
 # import string
 # import numpy
 # import math
@@ -15,25 +15,35 @@ import schema_gen.thrift as thrift
 import schema_gen.flatbuf as flatbuf
 import schema_gen.json as json
 
-key_value_pair = {} # have key-value pair
+CHARSET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+COMBINED_TYPES = ["int", "float", "string"]
 
-def generate_values_file(testSize):
+key_value_pair = {} # contains key-value pair
+# in combined, the key is for types (e.g. int, string, n_int: means nested int), and value is for the key name
+
+def generate_values_file(testSize, svalMin, svalMax, tkey, nkey, arrLen):
     with open("values.txt", "w") as f:
-        for i in range(testSize):
-            for key in key_value_pair.keys():
-                f.write(key_value_pair[key][i] + ", ")
-            f.write("\n")
+        if tkey != "combined":
+            for i in range(testSize):
+                for key in key_value_pair.keys():
+                    f.write(key_value_pair[key][i] + ", ")
+                f.write("\n")
+        elif tkey == "combined":
+            for i in range(testSize):
+                for _ in range(nkey + arrLen * nkey):
+                    f.write(''.join(random.SystemRandom().choice(CHARSET) for _ in range(random.randint(svalMin, svalMax))) + ", ")
+                f.write("\n")
 
 with open("config.txt", "r") as f:
-    nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, testSize = f.readline().split(", ")
-nkey, skeyMin, skeyMax, svalMin, svalMax, testSize = map(int, (nkey, skeyMin, skeyMax, svalMin, svalMax, testSize))
+    nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, testSize = f.readline().split(", ")
+nkey, skeyMin, skeyMax, svalMin, svalMax, testSize, arrLen = map(int, (nkey, skeyMin, skeyMax, svalMin, svalMax, testSize, arrLen))
 
-msg_gen = msgpack.msgpack_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, key_value_pair, testSize)
-pb_gen = protobuf.protobuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, key_value_pair, testSize)
-flexbuf_gen = flexbuf.flexbuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, key_value_pair, testSize)
-th_gen = thrift.thrift_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, key_value_pair, testSize)
-flatbuf_gen = flatbuf.flatbuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, key_value_pair, testSize)
-json_gen = json.json_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, key_value_pair, testSize)
+msg_gen = msgpack.msgpack_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
+pb_gen = protobuf.protobuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
+flexbuf_gen = flexbuf.flexbuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
+th_gen = thrift.thrift_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
+flatbuf_gen = flatbuf.flatbuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
+json_gen = json.json_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
 
 # TODO: consider moving these below 2 files into root directory
 with open("./serial_func/benchmark_struct.h", "w") as f: 
@@ -62,7 +72,7 @@ with open("./serial_func/flatbuffers_func.h", "w") as f:
 with open("./serial_func/json_func.h", "w") as f:
     f.write(json_gen.gen_header())
 
-if(tkey == "string"):
-    generate_values_file(testSize)
+if(tkey == "string" or tkey == "combined"):
+    generate_values_file(testSize, svalMin, svalMax, tkey, nkey, arrLen)
 
 print("structures have been generated.")
