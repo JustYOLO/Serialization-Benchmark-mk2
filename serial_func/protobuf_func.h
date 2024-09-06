@@ -6,7 +6,7 @@ namespace proto {
         GOOGLE_PROTOBUF_VERIFY_VERSION; // is it necessary?
         ProtoData protoData;
             protoData.set_struct(data.struct);
-            protoData.set_mjogvdtj(data.mjogvdtj);
+            protoData.set_jmihzbsn(data.jmihzbsn);
             protoData.set_int(data.int);
             protoData.set_float(data.float);
             protoData.set_string(data.string);
@@ -24,7 +24,7 @@ namespace proto {
             ProtoData protoData;
             protoData.ParseFromArray(serializedData.data(), static_cast<int>(size));
             data.struct = protoData.struct();
-            data.mjogvdtj = protoData.mjogvdtj();
+            data.jmihzbsn = protoData.jmihzbsn();
             data.int = protoData.int();
             data.float = protoData.float();
             data.string = protoData.string();

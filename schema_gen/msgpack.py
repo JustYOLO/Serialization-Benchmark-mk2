@@ -9,7 +9,7 @@ class msgpack_gen:
 // this may only used by msgPack
 
 """
-    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, combined_types) -> None:
+    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, combined_types, pValue, value_exists) -> None:
         self.nkey = nkey
         self.tkey = tkey
         self.skeyMin = skeyMin
@@ -20,10 +20,33 @@ class msgpack_gen:
         self.testSize = testSize
         self.arrLen = arrLen
         self.COMBINED_TYPES = combined_types
+        self.pValue = pValue
+        self.value_exists = value_exists
     
     def gen_rand_name(self) -> str:
         tmp = ''.join(random.SystemRandom().choice(string.ascii_lowercase) for _ in range(random.randint(self.skeyMin, self.skeyMax)))
         return tmp
+
+    def set_value_exists(self) -> None:
+        nested = self.key_value_pair['struct']
+        if self.tkey != "combined": 
+            for key in self.key_value_pair.keys():
+                if random.randint(1, 100) <= self.pValue:
+                    self.value_exists[key] = True
+                else:
+                    self.value_exists[key] = False
+        else:
+            for type in self.COMBINED_TYPES:
+                for key in self.key_value_pair[type]:
+                    if random.randint(1, 100) <= self.pValue:
+                        self.value_exists[key] = True
+                    else:
+                        self.value_exists[key] = False
+                for key in self.key_value_pair[nested][type]:
+                    if random.randint(1, 100) <= self.pValue:
+                        self.value_exists[key] = True
+                    else:
+                        self.value_exists[key] = False
 
     def gen_header(self) -> str:
         struct_content = f"""#pragma once
@@ -124,6 +147,10 @@ class msgpack_gen:
         struct_content += ");\n"
 
         struct_content += "};\n\n"
+        
+        # before return, add existance of each value
+        self.set_value_exists()
+
         return struct_content
 
     def gen_cc(self) -> str:
@@ -141,19 +168,23 @@ class msgpack_gen:
             for type in self.COMBINED_TYPES:
                 if type != "string":
                     for key in self.key_value_pair[type]:
-                        content += f"    data.{key} = generateRandomValue<{type}>();\n"
+                        if self.value_exists[key]:
+                            content += f"    data.{key} = generateRandomValue<{type}>();\n"
                 else:
                     for idx, key in enumerate(self.key_value_pair[type]):
-                        content += f"    data.{key} = values[{idx}];\n"
+                        if self.value_exists[key]:
+                            content += f"    data.{key} = values[{idx}];\n"
             # then, fill the nested struct's element
             content += f"    for(int i = 0; i < {self.arrLen}; i++) {{\n"
             for type in self.COMBINED_TYPES:
                 if type != "string":
                     for key in self.key_value_pair[nested][type]:
-                        content += f"        data.{nested}[i].{key} = generateRandomValue<{type}>();\n"
+                        if self.value_exists[key]:
+                            content += f"        data.{nested}[i].{key} = generateRandomValue<{type}>();\n"
                 else: # in case of string
                     for idx, key in enumerate(self.key_value_pair[nested][type]):
-                        content += f"        data.{nested}[i].{key} = values[(i + 1) * {self.nkey} + {idx}];\n"
+                        if self.value_exists[key]:
+                            content += f"        data.{nested}[i].{key} = values[(i + 1) * {self.nkey} + {idx}];\n"
 
             content += "    }\n"
 

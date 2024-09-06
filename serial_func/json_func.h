@@ -7,7 +7,7 @@ namespace json {
         jsonStruct j = {
             // {"{key}", data.{key}},
             {"struct", data.struct},
-            {"mjogvdtj", data.mjogvdtj},
+            {"jmihzbsn", data.jmihzbsn},
             {"int", data.int},
             {"float", data.float},
             {"string", data.string},
@@ -23,7 +23,7 @@ namespace json {
 
         // data.{key} = j["{key}"];
         data.struct = j["struct"];
-        data.mjogvdtj = j["mjogvdtj"];
+        data.jmihzbsn = j["jmihzbsn"];
         data.int = j["int"];
         data.float = j["float"];
         data.string = j["string"];

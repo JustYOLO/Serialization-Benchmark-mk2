@@ -12,7 +12,7 @@ namespace thrift {
     size_t Serialize(const testData& data, std::vector<char> &serializedData) {
         TStruct tStruct;
         tStruct.struct = data.struct;
-        tStruct.mjogvdtj = data.mjogvdtj;
+        tStruct.jmihzbsn = data.jmihzbsn;
         tStruct.int = data.int;
         tStruct.float = data.float;
         tStruct.string = data.string;
@@ -41,7 +41,7 @@ namespace thrift {
         TStruct tStruct;
         tStruct.read(protocolIn.get());
         data.struct = tStruct.struct;
-        data.mjogvdtj = tStruct.mjogvdtj;
+        data.jmihzbsn = tStruct.jmihzbsn;
         data.int = tStruct.int;
         data.float = tStruct.float;
         data.string = tStruct.string;

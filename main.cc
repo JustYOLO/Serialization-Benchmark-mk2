@@ -42,7 +42,7 @@ void getTokens(std::vector<std::string> &tokens) {
         tokens.push_back(s);
     }
 
-    if (tokens.size() < 7) {
+    if (tokens.size() < 8) {
         std::cerr << "Error: Not enough parameters in config file" << std::endl;
         exit(1);
     }
@@ -183,6 +183,7 @@ int main(int argc, char** argv) {
     size_t svalMin = std::stoi(tokens[4]);
     size_t svalMax = std::stoi(tokens[5]);
     size_t testSize = std::stoi(tokens[7]);
+    size_t pValue = std::stoi(tokens[8]); // pValue need in C++?
     std::string type = tokens[1];
 
     std::vector<std::string> values[testSize];

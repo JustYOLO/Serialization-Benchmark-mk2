@@ -1,5 +1,5 @@
-2, combined, 8, 8, 16, 16, 3, 20
-# nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, testSize, serialization_function
+2, combined, 8, 8, 16, 16, 3, 20, 20
+# nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, testSize, pValue
 # nkey: number of keys | tkey: type of keys | skey: size of keys (min, max) | sval: size of values
 # arrLen: (only used in combined) length of the struct array
 # supported types(tkey): int32_t, double, string, combined
@@ -7,5 +7,7 @@
 # sval only uses when the type(tkey) is string
 # string means: char {variable length = skey} [{sval + 1}]
 # adding 1 in sval means it needs a space for null character
+# pValue: probability of value existence. 100 means all key have value (default)
+
 # serialization_function names:
 # JSON, MP (MessagePack), FX (FlexBuffers), PB (Protocol Buffers), TH (Apache Thrift), FB (FlatBuffers)

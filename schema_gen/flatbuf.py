@@ -1,5 +1,5 @@
 class flatbuf_gen:
-    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, combined_types) -> None:
+    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, combined_types, pValue, value_exists) -> None:
         self.nkey = nkey
         self.tkey = tkey
         self.skeyMin = skeyMin
@@ -10,6 +10,8 @@ class flatbuf_gen:
         self.testSize = testSize
         self.arrLen = arrLen
         self.match(combined_types)
+        self.pValue = pValue
+        self.value_exists = value_exists
     
     def match(self, combined_types):
         '''
@@ -23,7 +25,6 @@ class flatbuf_gen:
                 self.COMBINED_TYPES["float"] = "float"
             elif type == "string":
                 self.COMBINED_TYPES["string"] = "string"
-
 
     def gen_schema(self) -> str:
         struct_content = ""

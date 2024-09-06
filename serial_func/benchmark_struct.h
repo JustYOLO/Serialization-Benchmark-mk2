@@ -10,21 +10,21 @@
 // Struct array length: 3
 
 struct testData {
-    int lmontiqn;
-    int gttsakbp;
-    float sgruersi;
-    float cbjiwmfv;
-    std::string toiywwtb;
-    std::string ojkinvvf;
+    int wfxtqnoc;
+    int xzepbayf;
+    float wllldavf;
+    float todnlesm;
+    std::string ahpotwhv;
+    std::string jnxqcwxf;
     struct nested {
-        int etiizwwn;
-        int cbcfskih;
-        float ldeucjga;
-        float cgekyebx;
-        std::string xgrdxjrt;
-        std::string calizksb;
-        MSGPACK_DEFINE_MAP(etiizwwn, cbcfskih, ldeucjga, cgekyebx, xgrdxjrt, calizksb);
-    } mjogvdtj[3];
-    MSGPACK_DEFINE_MAP(lmontiqn, gttsakbp, sgruersi, cbjiwmfv, toiywwtb, ojkinvvf, mjogvdtj);
+        int tkuuzxpp;
+        int raxmltsa;
+        float bfabwiyj;
+        float zlvlpass;
+        std::string zwdygjzg;
+        std::string hlirxqvq;
+        MSGPACK_DEFINE_MAP(tkuuzxpp, raxmltsa, bfabwiyj, zlvlpass, zwdygjzg, hlirxqvq);
+    } jmihzbsn[3];
+    MSGPACK_DEFINE_MAP(wfxtqnoc, xzepbayf, wllldavf, todnlesm, ahpotwhv, jnxqcwxf, jmihzbsn);
 };
 

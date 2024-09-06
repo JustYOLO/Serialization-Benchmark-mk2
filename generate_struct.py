@@ -20,6 +20,7 @@ COMBINED_TYPES = ["int", "float", "string"]
 
 key_value_pair = {} # contains key-value pair
 # in combined, the key is for types (e.g. int, string, n_int: means nested int), and value is for the key name
+value_exists = {} # contains value existence for each key
 
 def generate_values_file(testSize, svalMin, svalMax, tkey, nkey, arrLen):
     with open("values.txt", "w") as f:
@@ -35,15 +36,15 @@ def generate_values_file(testSize, svalMin, svalMax, tkey, nkey, arrLen):
                 f.write("\n")
 
 with open("config.txt", "r") as f:
-    nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, testSize = f.readline().split(", ")
-nkey, skeyMin, skeyMax, svalMin, svalMax, testSize, arrLen = map(int, (nkey, skeyMin, skeyMax, svalMin, svalMax, testSize, arrLen))
+    nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, testSize, pValue = f.readline().split(", ")
+nkey, skeyMin, skeyMax, svalMin, svalMax, testSize, arrLen, pValue = map(int, (nkey, skeyMin, skeyMax, svalMin, svalMax, testSize, arrLen, pValue))
 
-msg_gen = msgpack.msgpack_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
-pb_gen = protobuf.protobuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
-flexbuf_gen = flexbuf.flexbuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
-th_gen = thrift.thrift_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
-flatbuf_gen = flatbuf.flatbuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
-json_gen = json.json_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES)
+msg_gen = msgpack.msgpack_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES, pValue, value_exists)
+pb_gen = protobuf.protobuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES, pValue, value_exists)
+flexbuf_gen = flexbuf.flexbuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES, pValue, value_exists)
+th_gen = thrift.thrift_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES, pValue, value_exists)
+flatbuf_gen = flatbuf.flatbuf_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES, pValue, value_exists)
+json_gen = json.json_gen(nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, COMBINED_TYPES, pValue, value_exists)
 
 # TODO: consider moving these below 2 files into root directory
 with open("./serial_func/benchmark_struct.h", "w") as f: 

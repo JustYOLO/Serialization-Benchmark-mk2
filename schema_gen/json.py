@@ -1,5 +1,5 @@
 class json_gen:
-    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, combined_types) -> None:
+    def __init__(self, nkey, tkey, skeyMin, skeyMax, svalMin, svalMax, arrLen, key_value_pair, testSize, combined_types, pValue, value_exists) -> None:
         self.nkey = nkey
         self.tkey = tkey
         self.skeyMin = skeyMin
